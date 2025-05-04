@@ -155,7 +155,4 @@ public class User {
                 + ", country=" + country + ", login=" + login + ", password=" + password + ", points=" + points
                 + ", registrationDate=" + registrationDate + ", comments=" + comments + "]";
     }
-
-    
-
 }

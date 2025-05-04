@@ -63,6 +63,20 @@ public class LoanController {
         }
     }
 
+    @Operation(summary = "Get loans by book id")
+    @GetMapping("/book/{bookId}")
+    public ResponseEntity<List<Loan>> getLoansByBookId(@PathVariable Integer bookId) {
+        System.out.println("REQUEST: Getting loans for book with id " + bookId);
+        try {
+            List<Loan> loans = loanService.getLoansByBookId(bookId);
+            System.out.println("\t- Loans found: " + loans.size());
+            return new ResponseEntity<>(loans, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            System.out.println("\t- Loans not found for book with id " + bookId);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @Operation(summary = "Create loan")
     @PostMapping("")
     public ResponseEntity<Loan> createLoan(@RequestParam Integer bookId, @RequestParam Integer userId) {
@@ -77,6 +91,20 @@ public class LoanController {
         }
     }
 
+    @Operation(summary = "Get last loan by book id")
+    @GetMapping("/last/{bookId}")
+    public ResponseEntity<Loan> getLastLoanByBookId(@PathVariable Integer bookId) {
+        System.out.println("REQUEST: Getting last loan for book with id " + bookId);
+        try {
+            Loan loan = loanService.getLastLoanByBookId(bookId);
+            System.out.println("\t- Last loan found: " + loan.toString());
+            return new ResponseEntity<>(loan, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            System.out.println("\t- Last loan not found for book with id " + bookId);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @Operation(summary = "Return loan")
     @PutMapping("/{id}/return")
     public ResponseEntity<?> returnLoan(@PathVariable Integer id) {
@@ -86,6 +114,8 @@ public class LoanController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -100,6 +100,11 @@ public class Comment {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+
+        sb.append(", bookId=").append(book != null ? book.getId() : null);
+        sb.append(", userId=").append(user != null ? user.getId() : null);
+
+        /* 
         sb.append("Comment{");
         sb.append("id=").append(id);
         sb.append(", book=").append(book);
@@ -107,7 +112,8 @@ public class Comment {
         sb.append(", comment=").append(comment);
         sb.append(", rating=").append(rating);
         sb.append(", date=").append(date);
-        sb.append('}');
+        sb.append('}');*/
+        
         return sb.toString();
     }
 

@@ -96,4 +96,16 @@ public class LoanService {
         return loanRepository.findByUserId(userId);
     }
 
+    public List<Loan> getLoansByBookId(Integer bookId) {
+        return loanRepository.findByBookId(bookId);
+    }
+
+    public Loan getLastLoanByBookId(Integer bookId) {
+        List<Loan> loans = loanRepository.findByBookId(bookId);
+        if (loans.isEmpty()) {
+            throw new NoSuchElementException("No loans found for book with id " + bookId);
+        }
+        return loans.get(loans.size() - 1);
+    }
+
 }
