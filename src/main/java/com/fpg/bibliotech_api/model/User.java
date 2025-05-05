@@ -29,6 +29,7 @@ public class User {
     private String password;
     private Integer points;
     private Date registrationDate;
+    private String image;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -149,10 +150,19 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", address=" + address
                 + ", country=" + country + ", login=" + login + ", password=" + password + ", points=" + points
                 + ", registrationDate=" + registrationDate + ", comments=" + comments + "]";
     }
+
 }
