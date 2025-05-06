@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,6 +120,24 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             System.out.println("\t- ERROR: Incorrect password for user with login " + username);
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @Operation(summary = "Modify user")
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> modify(@PathVariable Integer id, @RequestBody User user) {
+        System.out.println("REQUEST: Modifying user with id " + id + "...");
+
+        try {
+            User modifiedUser = userService.modifyUser(id, user);
+            System.out.println("\t- User modified with id: " + modifiedUser.getId());
+            return new ResponseEntity<>(modifiedUser, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            System.out.println("\t- ERROR: User with id " + id + " not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            System.out.println("\t- ERROR: User with email " + user.getEmail() + " already exists");
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
     

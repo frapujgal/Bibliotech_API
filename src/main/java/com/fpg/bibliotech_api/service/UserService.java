@@ -104,4 +104,18 @@ public class UserService {
         }
     }
 
+    public User modifyUser(Integer id, User user) {
+        User existingUser = userRepository.findById(id).orElse(null);
+        if (existingUser == null) {
+            throw new NoSuchElementException("ERROR: User with id " + id + " not found");
+        }
+        existingUser.setName(user.getName());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setAddress(user.getAddress());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPhone(user.getPhone());
+        
+        return userRepository.save(existingUser);
+    }
+
 }
