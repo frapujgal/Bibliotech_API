@@ -66,7 +66,6 @@ public class CommentController {
         }
     }
 
-    // Hay que añadir comentario
     @Operation(summary = "Add a new comment")
     @PostMapping("")
     public ResponseEntity<Comment> addComment(@RequestParam Integer bookId, @RequestParam Integer userId, @RequestParam String text, @RequestParam Integer rating) {
